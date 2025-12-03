@@ -1,6 +1,3 @@
-from tarfile import data_filter
-from datetime import time
-import requests
 from tkinter import *
 from iso_3166 import *
 from API import *
@@ -38,7 +35,7 @@ while running:
 
     DATA = DataGet()
     if DATA != 0:
-        openstreetmap = 'https://www.openstreetmap.org/relation/108394#map=13/###/+++'
+        openstreetmap = 'https://www.openstreetmap.org/#map=13/###/+++'
         openstreetmap = openstreetmap.replace('###', str(DATA['coord']['lat']))
         openstreetmap = openstreetmap.replace('+++', str(DATA['coord']['lon']))
 
