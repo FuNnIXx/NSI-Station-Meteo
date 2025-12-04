@@ -1,4 +1,3 @@
-from tkinter import *
 from iso_3166 import *
 from API import *
 from art import *
