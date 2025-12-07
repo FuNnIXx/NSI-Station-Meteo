@@ -1,7 +1,10 @@
+from PIL.ImageOps import expand
 from customtkinter import *
 from CTkListbox import *
 import messagebox
 import webbrowser
+
+from customtkinter import CTkLabel
 
 '''VARIABLES DE DEFINITIONS'''
 
@@ -12,6 +15,8 @@ data = False
 
 city_name = False
 ctr_name = False
+
+temp_unit = '°C' #defaut = °C a modif vers °F
 
 temp = 0
 temp_min = 0
@@ -133,6 +138,43 @@ space3 = CTkFrame(menu, fg_color=color_frame, corner_radius=0, height=7.5)
 space3.pack()
 
 # GENERAL INFO FRAME
+
+general_info.pack_propagate(False)
+
+# TEMP
+
+frame_general_1 = CTkFrame(general_info, fg_color=color_frame, corner_radius=10)
+frame_general_1.pack(side=LEFT, fill=BOTH, pady=5, padx=5, expand=YES)
+
+frame_temp = CTkFrame(frame_general_1, fg_color=color_frame, corner_radius=10)
+frame_temp.pack(fill=BOTH, pady=20, padx=20)
+
+temp_display = CTkLabel(frame_temp, text=temp, font=("Monserrat", 50, "bold"), anchor='center')
+temp_display.pack(side=LEFT, fill=BOTH, padx=(50, 0), pady=(15, 0))
+
+temp_unit_label = CTkLabel(frame_temp, text=temp_unit, font=("Monserrat", 15, "bold"))
+temp_unit_label.pack(side=LEFT, fill=BOTH, expand=YES)
+
+temp_min_displayed = CTkLabel(frame_general_1, text=f'MIN : {temp_min}{temp_unit} \nMAX : {temp_max}{temp_unit} \nRessenti : {fells_like}{temp_unit}', font=("Monserrat", 15), text_color='grey', compound=RIGHT, anchor='n')
+temp_min_displayed.pack(fill=BOTH, expand=Y)
+
+# PRESSURE
+
+frame_general_2 = CTkFrame(general_info, fg_color=color_frame, corner_radius=10)
+frame_general_2.pack(side=LEFT, fill=BOTH, pady=5, padx=5, expand=YES)
+
+pessure_display = CTkLabel(frame_general_2, text=pressure, font=("Monserrat", 50, "bold"), anchor='center')
+pessure_display.pack(side=LEFT, fill=BOTH, padx=(50, 0))
+
+pressure_unit_label = CTkLabel(frame_general_2, text='hpa', font=("Monserrat", 15, "bold"))
+pressure_unit_label.pack(side=LEFT, fill=BOTH, expand=YES)
+
+# CONDITIONS
+
+frame_general_3 = CTkFrame(general_info, fg_color=color_frame, corner_radius=10)
+frame_general_3.pack(side=LEFT, fill=BOTH, pady=5, padx=5, expand=YES)
+
+
 
 # GENERAL FRAME NAME
 
