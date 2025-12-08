@@ -4,6 +4,7 @@ from CTkListbox import * #     pip install CTkListbox
 import messagebox
 import webbrowser
 from PIL import Image
+import datetime
 from dict import *
 
 '''VARIABLES DE DEFINITIONS'''
@@ -18,19 +19,19 @@ ctr_name = False
 
 temp_unit = '°C' #defaut = °C a modif vers °F
 
-condition_desc_code = 'ciel dégagé'
-condition_img = '01d'
-temp = 0
-temp_min = 0
-temp_max = 0
-fells_like = 0
-pressure = 1024
-wind = 0
-visibility = 0
-cloud = 0
-humidity = 0
-lon = 0
-lat = 0
+condition_desc_code = 'N/A'
+condition_img = ('01n')
+temp = '---'
+temp_min = '---'
+temp_max = '---'
+fells_like = '---'
+pressure = '---'
+wind = '---'
+visibility = '---'
+cloud = '---'
+humidity = '---'
+lon = '---'
+lat = '---'
 
 
 '''FONCTIONS'''
@@ -46,6 +47,30 @@ def open_map():
     openstreetmap = openstreetmap.replace('+++', f'{lon}')
     if openstreetmap:
         webbrowser.open(openstreetmap)
+
+def toggle_metric_imperial():
+    global temp_unit
+    if temp_unit == '°C':
+        temp_unit = '°F'
+        m_i_switch.configure(text=f'Actuel : {temp_unit} : METRIC / IMPERIAL')
+
+    else:
+        temp_unit = '°C'
+        m_i_switch.configure(text=f'Actuel : {temp_unit} : METRIC / IMPERIAL')
+
+def get_clouds_img():
+    global cloud
+    if cloud == 0 o cloud == '---':
+        return('0')
+    elif cloud <= 25 and cloud > 0:
+        return('25')
+    elif cloud <= 50 and cloud > 25:
+        return('50')
+    elif cloud <= 75 and cloud > 50:
+        return('75')
+    else:
+        return('100')
+
 
 '''INTERFACE UI'''
 
@@ -100,8 +125,11 @@ title_info_2_frame.pack_propagate(False)
 header = CTkLabel(title_frame, text=f'Données météo à {city_name} ', font=('Monserrat', 30, 'bold'), text_color='white', bg_color='transparent')
 header.pack(pady=10, padx=15, side=LEFT)
 
-openstreetmap_button = CTkButton(title_frame, text='OpenStreetMap', font=('Monserrat', 15), text_color='#59608C', corner_radius=10, fg_color='white', hover_color='#B6B6B6', command=open_map)
-openstreetmap_button.pack(pady=10, padx=15, side=RIGHT)
+openstreetmap_button = CTkButton(title_frame, text='OpenStreetMap', font=('Monserrat', 15), text_color='#59608C', corner_radius=10, fg_color='white', hover_color='#B6B6B6', command=open_map, width=50)
+openstreetmap_button.pack(pady=10, padx=5, side=RIGHT)
+
+validate_button = CTkButton(title_frame, text='RECHERCHER', font=('Monserrat', 15, 'bold'), text_color='#59608C', corner_radius=10, fg_color='white', hover_color='#B6B6B6', width=50)
+validate_button.pack(pady=10, padx=5, side=RIGHT)
 
 # MERNU FRAME
 
@@ -189,10 +217,20 @@ canvas_title_general.create_text(12, 90, text="GENERAL", font=("Monserrat", 15, 
 
 # PRECISION INFO FRAME
 
+cloud_display_img = CTkImage(light_image=Image.open(f'img/icons_clouds/{'0'}.png'), dark_image=Image.open(f'img/icons_clouds/0.png'), size=(19))
+
 # PRECISION FRAME NAME
 
 canvas_title_precision = CTkCanvas(title_info_2_frame, highlightthickness=0)
 canvas_title_precision.pack(pady=10, padx=1, expand=YES)
-canvas_title_precision.create_text(12, 132, text="PRECISIONS", font=("Monserrat", 15, "bold"), fill="#000000", angle=90)
+canvas_title_precision.create_text(12, 133, text="PRECISIONS", font=("Monserrat", 15, "bold"), fill="#000000", angle=90)
+
+# METRIC TO IMPERIAL / DATE
+
+date = CTkLabel(right_side, text=datetime.datetime.now().strftime("%d/%m/%Y %H:%M"), font=('Monserrat', 12), text_color='white')
+date.pack(side=LEFT)
+
+m_i_switch = CTkSwitch(right_side, text=f'Actuel : {temp_unit} : METRIC / IMPERIAL', font=('Monserrat', 12, 'bold'), text_color='white', command=toggle_metric_imperial)
+m_i_switch.pack(side=RIGHT)
 
 root.mainloop()
