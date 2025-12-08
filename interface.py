@@ -1,10 +1,10 @@
 from PIL.ImageOps import expand
-from customtkinter import *
-from CTkListbox import *
+from customtkinter import *  #     pip install customtkinter
+from CTkListbox import * #     pip install CTkListbox
 import messagebox
 import webbrowser
-
-from customtkinter import CTkLabel
+from PIL import Image
+from dict import *
 
 '''VARIABLES DE DEFINITIONS'''
 
@@ -18,6 +18,8 @@ ctr_name = False
 
 temp_unit = '°C' #defaut = °C a modif vers °F
 
+condition_desc_code = 'ciel dégagé'
+condition_img = '01d'
 temp = 0
 temp_min = 0
 temp_max = 0
@@ -103,7 +105,7 @@ openstreetmap_button.pack(pady=10, padx=15, side=RIGHT)
 
 # MERNU FRAME
 
-app_title = CTkLabel(menu, text='WeatherDATA', font=('Monserrat', 30, 'bold'), width=300)
+app_title = CTkLabel(menu, text='WeatherDATA', font=('Monserrat', 30, 'bold'), width=300, text_color='white')
 app_title.pack(pady=30, padx=0, side=TOP, fill=BOTH)
 
 # RECHERCHE DU PAYS
@@ -152,7 +154,7 @@ frame_temp.pack(fill=BOTH, pady=20, padx=20)
 temp_display = CTkLabel(frame_temp, text=temp, font=("Monserrat", 50, "bold"), anchor='center')
 temp_display.pack(side=LEFT, fill=BOTH, padx=(50, 0), pady=(15, 0))
 
-temp_unit_label = CTkLabel(frame_temp, text=temp_unit, font=("Monserrat", 15, "bold"))
+temp_unit_label = CTkLabel(frame_temp, text=temp_unit, font=("Monserrat", 15, "bold"), text_color='white')
 temp_unit_label.pack(side=LEFT, fill=BOTH, expand=YES)
 
 temp_min_displayed = CTkLabel(frame_general_1, text=f'MIN : {temp_min}{temp_unit} \nMAX : {temp_max}{temp_unit} \nRessenti : {fells_like}{temp_unit}', font=("Monserrat", 15), text_color='grey', compound=RIGHT, anchor='n')
@@ -172,8 +174,11 @@ pressure_unit_label.pack(side=LEFT, fill=BOTH, expand=YES)
 # CONDITIONS
 
 frame_general_3 = CTkFrame(general_info, fg_color=color_frame, corner_radius=10)
-frame_general_3.pack(side=LEFT, fill=BOTH, pady=5, padx=5, expand=YES)
+frame_general_3.pack(side=LEFT, fill=BOTH, pady=5, padx=(0, 5), expand=YES)
 
+conditions_display_img = CTkImage(light_image=Image.open(f'img/icons/{condition_img}@2x.png'), dark_image=Image.open(f'img/icons/{condition_img}@2x.png'), size=(190, 190))
+conditions_display = CTkLabel(frame_general_3, image=conditions_display_img, text=f'\n\n\n\n\n\n{condition_desc_code}', font=("Monserrat", 20), text_color='grey', anchor='n')
+conditions_display.pack(fill=BOTH, padx=(0, 0))
 
 
 # GENERAL FRAME NAME
