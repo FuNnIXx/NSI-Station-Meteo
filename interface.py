@@ -60,7 +60,7 @@ def toggle_metric_imperial():
 
 def get_clouds_img():
     global cloud
-    if cloud == 0 o cloud == '---':
+    if cloud == 0 or cloud == '---':
         return('0')
     elif cloud <= 25 and cloud > 0:
         return('25')
