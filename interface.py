@@ -6,6 +6,7 @@ import webbrowser
 from PIL import Image
 import datetime
 from dict import *
+import requests
 
 '''VARIABLES DE DEFINITIONS'''
 
@@ -18,9 +19,10 @@ city_name = False
 ctr_name = False
 
 temp_unit = '°C' #defaut = °C a modif vers °F
+speed_unit = 'km/h' #defaut = km/h modif vers mph
 
 condition_desc_code = 'N/A'
-condition_img = ('01n')
+condition_img = '01n'
 temp = '---'
 temp_min = '---'
 temp_max = '---'
@@ -47,29 +49,129 @@ def open_map():
     openstreetmap = openstreetmap.replace('+++', f'{lon}')
     if openstreetmap:
         webbrowser.open(openstreetmap)
+    return None
+
 
 def toggle_metric_imperial():
-    global temp_unit
+    global temp_unit, speed_unit
     if temp_unit == '°C':
         temp_unit = '°F'
-        m_i_switch.configure(text=f'Actuel : {temp_unit} : METRIC / IMPERIAL')
+        m_i_switch.configure(text=f'Actuel : IMP : METRIC / IMPERIAL')
 
     else:
         temp_unit = '°C'
-        m_i_switch.configure(text=f'Actuel : {temp_unit} : METRIC / IMPERIAL')
+        m_i_switch.configure(text=f'Actuel : MET : METRIC / IMPERIAL')
+
+    if speed_unit == 'km/h':
+        speed_unit = 'mph'
+    else:
+        speed_unit = 'km/h'
+    return None
+
+
 
 def get_clouds_img():
     global cloud
     if cloud == 0 or cloud == '---':
-        return('0')
-    elif cloud <= 25 and cloud > 0:
-        return('25')
-    elif cloud <= 50 and cloud > 25:
-        return('50')
-    elif cloud <= 75 and cloud > 50:
-        return('75')
+        return '0'
+    elif 25 >= cloud > 0:
+        return '25'
+    elif 50 >= cloud > 25:
+        return '50'
+    elif 75 >= cloud > 50:
+        return '75'
     else:
-        return('100')
+        return '100'
+
+def get_wind_img():
+    global cloud
+    if wind == '---':
+        return '0'
+    elif wind  >= 337.5 or wind < 22.5:
+        return 'n'
+    elif 22.5 <= wind < 67.5:
+        return 'ne'
+    elif 67.5 <= wind < 112.5:
+        return "e"
+    elif 112.5 <= wind < 157.5:
+        return 'se'
+    elif 157.5 <= wind < 202.5:
+        return 's'
+    elif 202.5 <= wind < 247.5:
+        return 'sw'
+    elif 247.5 <= wind < 292.5:
+        return "w"
+    else:
+        return 'nw'
+
+def get_visibility_img():
+    global visibility
+    if visibility == '---':
+        return '00'
+    elif visibility == 0:
+        return '0'
+    elif 250 >= visibility > 0:
+        return '250'
+    elif 500 >= visibility > 250:
+        return '500'
+    elif 750 >= visibility > 500:
+        return '750'
+    elif 1000 >= visibility > 750:
+        return '1000'
+    elif 1500 >= visibility > 1000:
+        return '1500'
+    elif 3000 >= visibility > 1500:
+        return '3000'
+    elif 6000 >= visibility > 3000:
+        return '6000'
+    elif 10000 >= visibility > 6000:
+        return '10000'
+    return None
+
+
+def get_humidity_img():
+    global humidity
+    if humidity == '---':
+        return '00'
+    elif humidity == 0:
+        return '0'
+    elif 25 >= humidity > 0:
+        return '25'
+    elif 50 >= humidity > 25:
+        return '50'
+    elif 75 >= humidity > 50:
+        return '75'
+    else:
+        return '100'
+
+def get_weather_data():
+    global city_name, ctr_name, data, condition_desc_code, condition_img, temp, temp_min, temp_max, fells_like, pressure, wind, visibility, cloud, humidity, lon, lat
+
+    if not ctr_name:
+        messagebox.showerror('Error', 'Veuillez selectionner un pays')
+        return()
+
+    if not city_name:
+        messagebox.showerror('Error', 'Veuillez selectionner une ville')
+        return()
+
+    url = 'https://api.openweathermap.org/data/2.5/weather?q=###,++&appid=7585221fbcead099c4e4c4bb6fd3b68f&units=metric'
+    url = url.replace('###', city_name)
+    url = url.replace('++', ctr_name)
+
+    response =  requests.get(url)
+    response = response.json()
+
+    if response['cod'] == '404':
+        messagebox.showerror('Error', 'Ville introuvable')
+        return()
+    else:
+        data = response
+        condition_desc_code = description()[data['weather'][0]['description']]
+        condition_img = data['weather'][0]['icon']
+        temp = round(data['main']['temp'])
+        temp_min = 0
+        return None
 
 
 '''INTERFACE UI'''
@@ -217,7 +319,53 @@ canvas_title_general.create_text(12, 90, text="GENERAL", font=("Monserrat", 15, 
 
 # PRECISION INFO FRAME
 
-cloud_display_img = CTkImage(light_image=Image.open(f'img/icons_clouds/{'0'}.png'), dark_image=Image.open(f'img/icons_clouds/0.png'), size=(19))
+# FRAMING
+
+wind_frame = CTkFrame(precisions_info, fg_color=color_frame)
+wind_frame.pack(side=LEFT, fill=BOTH, pady=5, padx=5)
+
+visibility_frame = CTkFrame(precisions_info, fg_color=color_frame)
+visibility_frame.pack(side=LEFT, fill=BOTH, pady=5, padx=5)
+
+cloud_frame = CTkFrame(precisions_info, fg_color=color_frame)
+cloud_frame.pack(side=LEFT, fill=BOTH, pady=5, padx=5)
+
+humidity_frame = CTkFrame(precisions_info, fg_color=color_frame)
+humidity_frame.pack(side=LEFT, fill=BOTH, pady=5, padx=5)
+
+# WIND
+
+wind_display_img = CTkImage(light_image=Image.open(f'img/icons_wind/0.png'), dark_image=Image.open(f'img/icons_wind/0.png'), size=(165, 165))
+wind_display = CTkLabel(wind_frame, image=wind_display_img, text='')
+wind_display.pack(fill=BOTH, pady=(35, 0))
+
+text_wind_frame = CTkFrame(wind_frame, fg_color=color_frame)
+text_wind_frame.pack(fill=BOTH, pady=5, padx=5)
+
+wind_value = CTkLabel(text_wind_frame, text=wind, font=("Monserrat", 58, 'bold'), text_color='white')
+wind_value.pack(side=LEFT, fill=BOTH, padx=(35, 0))
+
+wind_unit_label = CTkLabel(text_wind_frame, text=speed_unit, font=("Monserrat", 20, 'bold'), anchor=SW)
+wind_unit_label.pack(side=LEFT, fill=BOTH, expand=YES)
+
+# VISIBILITY
+
+visibility_display_img = CTkImage(light_image=Image.open(f'img/icons_vis/00.png'), dark_image=Image.open(f'img/icons_vis/00.png'), size=(165, 165))
+visibility_display = CTkLabel(visibility_frame, image=visibility_display_img, text='')
+visibility_display.pack(fill=BOTH, pady=(35, 0))
+
+# CLOUDS
+
+cloud_display_img = CTkImage(light_image=Image.open(f'img/icons_clouds/0.png'), dark_image=Image.open(f'img/icons_clouds/0.png'), size=(165, 165))
+cloud_display = CTkLabel(cloud_frame, image=cloud_display_img, text='')
+cloud_display.pack(fill=BOTH, pady=(35, 0))
+
+# HUMIDITY
+
+humidity_display_img = CTkImage(light_image=Image.open(f'img/icons_hum/00.png'), dark_image=Image.open(f'img/icons_hum/00.png'), size=(165, 165))
+humidity_display = CTkLabel(humidity_frame, image=humidity_display_img, text='')
+humidity_display.pack(fill=BOTH, pady=(35, 0))
+
 
 # PRECISION FRAME NAME
 
