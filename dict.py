@@ -71,25 +71,6 @@ def description():
     }
     return(weather_description_fr)
 
-def weathermain():
-    weather_main_fr = {
-        "Thunderstorm": "Il y a de l'Orage",
-        "Drizzle": "Il Bruine",
-        "Rain": "Il pleue",
-        "Snow": "Il Neige",
-        "Mist": "Il y a de la Brume",
-        "Smoke": "Il y a de la Fumée",
-        "Haze": "Il y a de la Brume sèche",
-        "Dust": "Il y a de la Poussière",
-        "Fog": "Il y a du Brouillard",
-        "Sand": "Il y a du Sable",
-        "Ash": "Il y a des Cendres volcaniques",
-        "Squall": "Il y a des Rafales",
-        "Tornado": "Il y a une Tornade",
-        "Clear": "Il y a un Ciel dégagé",
-        "Clouds": "Il y a des Nuages"
-    }
-    return(weather_main_fr)
 
 def weatheremoji():
     weather_emojis = {
