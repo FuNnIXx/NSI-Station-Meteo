@@ -275,7 +275,7 @@ def city_search_get():
         response = requests.post(url, json=payload)
         cities = response.json()
         cities = cities['data']
-        matches = get_close_matches(search_term, cities, n=15, cutoff=0.1)
+        matches = get_close_matches(search_term, cities, n=15, cutoff=0.5)
         for match in matches:
             city_list.insert(END, match)
     else:
