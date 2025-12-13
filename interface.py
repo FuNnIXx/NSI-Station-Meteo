@@ -1,8 +1,9 @@
 from difflib import get_close_matches #      pip install cdifflib
 from PIL.ImageOps import expand
 from customtkinter import *  #     pip install customtkinter
+from tkinter import messagebox
 from CTkListbox import * #     pip install CTkListbox
-import messagebox #     pip install messagebox
+'''import messagebox #     pip install messagebox'''
 import webbrowser
 from PIL import Image #     pip install Pillow
 import datetime
@@ -307,7 +308,7 @@ def ctr_listbox_select(selected_item):
     ctr_name = selected_item
     ctr_checked = True
     ctr_iso = ctr_to_iso()[ctr_name]
-    print(ctr_iso)
+    # print(ctr_iso)
 
 '''INTERFACE UI'''
 
@@ -365,9 +366,6 @@ title_info_2_frame.pack_propagate(False)
 
 header = CTkLabel(title_frame, text=f'Données météo à {city_name} ', font=('Monserrat', 30, 'bold'), text_color='white', bg_color='transparent')
 header.pack(pady=10, padx=15, side=LEFT)
-
-openstreetmap_button = CTkButton(title_frame, text='OpenStreetMap', font=('Monserrat', 15, 'bold'), text_color='#59608C', corner_radius=10, fg_color='white', hover_color='#B6B6B6', command=open_map, width=50)
-openstreetmap_button.pack(pady=10, padx=5, side=RIGHT)
 
 validate_button = CTkButton(title_frame, text='RECHERCHER', font=('Monserrat', 15, 'bold'), text_color='#59608C', corner_radius=10, fg_color='white', hover_color='#B6B6B6', width=50, command=call_api)
 validate_button.pack(pady=10, padx=5, side=RIGHT)
@@ -557,6 +555,9 @@ canvas_title_precision.create_text(12, 133, text="PRECISIONS", font=("Monserrat"
 
 date = CTkLabel(right_side, text=f'{datetime.datetime.now().strftime("%d/%m/%Y %H:%M")}     Sunrise / Sunset : {sunrise} / {sunset} (UTC+1)', font=('Monserrat', 12), text_color='white')
 date.pack(side=LEFT)
+
+openstreetmap_button = CTkButton(right_side, text='OpenStreetMap', font=('Monserrat', 15, 'bold'), text_color='#59608C', corner_radius=10, fg_color='white', hover_color='#B6B6B6', command=open_map, width=50)
+openstreetmap_button.pack(pady=10, padx=5, side=RIGHT)
 
 m_i_switch = CTkSwitch(right_side, text=f'Actuel : MET : METRIC / IMPERIAL', font=('Monserrat', 12, 'bold'), text_color='white', command=toggle_metric_imperial)
 m_i_switch.pack(side=RIGHT)
