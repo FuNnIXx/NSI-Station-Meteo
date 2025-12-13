@@ -100,31 +100,40 @@ def get_wind_img():
     global wind_deg
     if wind_deg == '---':
         # return '0'
-        wind_display_img.configure(light_image=Image.open(f'img/icons_wind/0.png'), dark_image=Image.open(f'img/icons_wind/0.png'))
+        wind_display_img.configure(light_image=Image.open(f'../img/icons_wind/0.png'), dark_image=Image.open(
+            f'../img/icons_wind/0.png'))
     elif wind_deg >= 337 or wind_deg < 22:
         # return 'n'
-        wind_display_img.configure(light_image=Image.open(f'img/icons_wind/n.png'), dark_image=Image.open(f'img/icons_wind/n.png'))
+        wind_display_img.configure(light_image=Image.open(f'../img/icons_wind/n.png'), dark_image=Image.open(
+            f'../img/icons_wind/n.png'))
     elif 22 <= wind_deg < 67:
         # return 'ne'
-        wind_display_img.configure(light_image=Image.open(f'img/icons_wind/ne.png'), dark_image=Image.open(f'img/icons_wind/ne.png'))
+        wind_display_img.configure(light_image=Image.open(f'../img/icons_wind/ne.png'), dark_image=Image.open(
+            f'../img/icons_wind/ne.png'))
     elif 67 <= wind_deg < 112:
         # return "e"
-        wind_display_img.configure(light_image=Image.open(f'img/icons_wind/e.png'), dark_image=Image.open(f'img/icons_wind/e.png'))
+        wind_display_img.configure(light_image=Image.open(f'../img/icons_wind/e.png'), dark_image=Image.open(
+            f'../img/icons_wind/e.png'))
     elif 112 <= wind_deg < 157:
         # return 'se'
-        wind_display_img.configure(light_image=Image.open(f'img/icons_wind/se.png'), dark_image=Image.open(f'img/icons_wind/se.png'))
+        wind_display_img.configure(light_image=Image.open(f'../img/icons_wind/se.png'), dark_image=Image.open(
+            f'../img/icons_wind/se.png'))
     elif 157 <= wind_deg < 202:
         # return 's'
-        wind_display_img.configure(light_image=Image.open(f'img/icons_wind/s.png'), dark_image=Image.open(f'img/icons_wind/s.png'))
+        wind_display_img.configure(light_image=Image.open(f'../img/icons_wind/s.png'), dark_image=Image.open(
+            f'../img/icons_wind/s.png'))
     elif 202 <= wind_deg < 247:
         # return 'sw'
-        wind_display_img.configure(light_image=Image.open(f'img/icons_wind/sw.png'), dark_image=Image.open(f'img/icons_wind/sw.png'))
+        wind_display_img.configure(light_image=Image.open(f'../img/icons_wind/sw.png'), dark_image=Image.open(
+            f'../img/icons_wind/sw.png'))
     elif 247 <= wind_deg < 292:
         # return "w"
-        wind_display_img.configure(light_image=Image.open(f'img/icons_wind/w.png'), dark_image=Image.open(f'img/icons_wind/w.png'))
+        wind_display_img.configure(light_image=Image.open(f'../img/icons_wind/w.png'), dark_image=Image.open(
+            f'../img/icons_wind/w.png'))
     else:
         # return 'nw'
-        wind_display_img.configure(light_image=Image.open(f'img/icons_wind/nw.png'), dark_image=Image.open(f'img/icons_wind/nw.png'))
+        wind_display_img.configure(light_image=Image.open(f'../img/icons_wind/nw.png'), dark_image=Image.open(
+            f'../img/icons_wind/nw.png'))
 
 def get_visibility_img():
     global visibility
@@ -472,7 +481,7 @@ humidity_frame.pack(side=LEFT, fill=BOTH, pady=0, padx=5)
 
 # WIND
 
-wind_display_img = CTkImage(light_image=Image.open(f'img/icons_wind/0.png'), dark_image=Image.open(f'img/icons_wind/0.png'), size=(165, 165))
+wind_display_img = CTkImage(light_image=Image.open(f'../img/icons_wind/0.png'), dark_image=Image.open(f'../img/icons_wind/0.png'), size=(165, 165))
 wind_display = CTkLabel(wind_frame, image=wind_display_img, text='')
 wind_display.pack(fill=BOTH, pady=(20, 0))
 
@@ -490,7 +499,8 @@ wind_text_desc.pack()
 
 # VISIBILITY
 
-visibility_display_img = CTkImage(light_image=Image.open(f'img/icons_vis/00.png'), dark_image=Image.open(f'img/icons_vis/00.png'), size=(165, 165))
+visibility_display_img = CTkImage(light_image=Image.open(f'../img/icons_vis/00.png'), dark_image=Image.open(
+    f'../img/icons_vis/00.png'), size=(165, 165))
 visibility_display = CTkLabel(visibility_frame, image=visibility_display_img, text='')
 visibility_display.pack(fill=BOTH, pady=(20, 0))
 
@@ -511,7 +521,8 @@ vis_text_desc.pack()
 
 # CLOUDS
 
-cloud_display_img = CTkImage(light_image=Image.open(f'img/icons_clouds/0.png'), dark_image=Image.open(f'img/icons_clouds/0.png'), size=(165, 165))
+cloud_display_img = CTkImage(light_image=Image.open(f'../img/icons_clouds/0.png'), dark_image=Image.open(
+    f'../img/icons_clouds/0.png'), size=(165, 165))
 cloud_display = CTkLabel(cloud_frame, image=cloud_display_img, text='')
 cloud_display.pack(fill=BOTH, pady=(20, 0))
 
@@ -529,7 +540,8 @@ cloud_text_desc.pack()
 
 # HUMIDITY
 
-humidity_display_img = CTkImage(light_image=Image.open(f'img/icons_hum/00.png'), dark_image=Image.open(f'img/icons_hum/00.png'), size=(165, 165))
+humidity_display_img = CTkImage(light_image=Image.open(f'../img/icons_hum/00.png'), dark_image=Image.open(
+    f'../img/icons_hum/00.png'), size=(165, 165))
 humidity_display = CTkLabel(humidity_frame, image=humidity_display_img, text='')
 humidity_display.pack(fill=BOTH, pady=(20, 0))
 
