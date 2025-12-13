@@ -401,7 +401,7 @@ title_info_2_frame.pack_propagate(False)
 
 # TITLE FRAME
 
-header = CTkLabel(title_frame, text=f'Données météo à {city_name} ', font=('Monserrat', 30, 'bold'), text_color='white', bg_color='transparent')
+header = CTkLabel(title_frame, text=f'Données météo à --- ', font=('Monserrat', 30, 'bold'), text_color='white', bg_color='transparent')
 header.pack(pady=10, padx=15, side=LEFT)
 
 validate_button = CTkButton(title_frame, text='RECHERCHER', font=('Monserrat', 15, 'bold'), text_color='#59608C', corner_radius=10, fg_color='white', hover_color='#B6B6B6', width=50, command=call_api)
