@@ -3,13 +3,11 @@ from PIL.ImageOps import expand
 from customtkinter import *  #     pip install customtkinter
 from tkinter import messagebox
 from CTkListbox import * #     pip install CTkListbox
-'''import messagebox #     pip install messagebox'''
 import webbrowser
 from PIL import Image #     pip install Pillow
 import datetime
 import os
 import sys
-
 from dict import *
 import requests #     pip install requests
 
@@ -18,7 +16,6 @@ import requests #     pip install requests
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
         base_path = sys._MEIPASS
     except AttributeError:
         base_path = os.path.abspath(os.path.dirname(__file__))
@@ -197,7 +194,7 @@ def ctr_city_check():
 
 def call_api():
     global city_name, ctr_name, data, condition_desc_code, condition_img, temp, temp_min, temp_max, fells_like, pressure, wind, visibility, cloud, humidity, lon, lat, wind_deg, snow, rain, sunrise, sunset
-
+    
     if not ctr_city_check():
         return
 
@@ -224,7 +221,7 @@ def call_api():
     if 'cod' in api_data and str(api_data['cod']) != '200':
         messagebox.showerror('Error', f"Erreur de l'API Météo: {api_data.get('message', 'Ville non trouvée')}")
         return()
-
+    
     data = api_data
     lon = data['coord']['lon']
     lat = data['coord']['lat']
@@ -245,11 +242,13 @@ def call_api():
     wind_deg = data['wind']['deg']
     cloud = data['clouds']['all']
     if 'rain' in data:
-        rain = f'{data['rain']['1h']}mm'
+        rain = f"{data['rain']['1h']}mm"
+        rain = 'error'
     else:
         rain = 'Pas de pluie cette heure-ci'
     if 'snow' in data:
-        snow = f'{data['snow']['1h']}mm'
+        snow = f"{data['snow']['1h']}mm"
+        snow = 'error'
     else:
         snow = 'Pas de neige cette heure-ci'
     sunrise = data['sys']['sunrise']
@@ -265,9 +264,9 @@ def call_api():
 def refresh_ui():
     global city_name, ctr_name, data, condition_desc_code, condition_img, temp, temp_min, temp_max, fells_like, pressure, wind, visibility, cloud, humidity, lon, lat, wind_deg, snow, rain, sunrise, sunset
 
-    header.configure(text=f'Données météo à {city_name} ')
-    conditions_display_img.configure(light_image=Image.open(resource_path(f'img/icons/{condition_img}@2x.png')), dark_image=Image.open(resource_path(f'img/icons/{condition_img}@2x.png')))
-    conditions_display.configure(text=f'\n\n\n\n\n\n{description()[data['weather'][0]['description']]}')
+    header.configure(text=f"Données météo à {city_name} ")
+    conditions_display_img.configure(light_image=Image.open(resource_path(f"img/icons/{condition_img}@2x.png")), dark_image=Image.open(resource_path(f"img/icons/{condition_img}@2x.png")))
+    conditions_display.configure(text=f"\n\n\n\n\n\n{description()[data['weather'][0]['description']]}")
     temp_display.configure(text=temp)
     temp_unit_label.configure(text=temp_unit)
     temp_other_displayed.configure(text=f'MIN : {temp_min}{temp_unit} \nMAX : {temp_max}{temp_unit} \nRessenti : {fells_like}{temp_unit}')
@@ -542,7 +541,7 @@ vis_value = CTkLabel(vis_grid, text=visibility, font=("Monserrat", 50, 'bold'), 
 vis_value.grid(row=0, column=0, sticky='e')
 
 vis_unit_label = CTkLabel(vis_grid, text=vis_unit, font=("Monserrat", 20, 'bold'), anchor=SW, text_color='white')
-vis_unit_label.grid(row=0, column=1, sticky='w')
+vis_unit_label.grid(row=0, column=1, sticky='sw')
 
 vis_text_desc = CTkLabel(visibility_frame, text='VISIBILITE', text_color='grey', font=("Monserrat", 20))
 vis_text_desc.pack()
