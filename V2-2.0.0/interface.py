@@ -285,6 +285,7 @@ def refresh_ui():
     wind_unit_label.configure(text=speed_unit)
     temp_other_displayed.configure(text=f'MIN : {temp_min}{temp_unit} \nMAX : {temp_max}{temp_unit} \nRessenti : {fells_like}{temp_unit}')
     space_rain_snow.configure(text=f'Précipitations (mm) : {rain}   /   Neige (mm) : {snow}')
+    wind_display.configure(text=f'   \n\n\n\n\n{wind_deg}°', font=("Monserrat", 20, 'bold'), text_color='black')
 
 def city_search_get():
     global city_name, ctr_name
@@ -509,7 +510,7 @@ humidity_frame.pack(side=LEFT, fill=BOTH, pady=0, padx=5)
 # WIND
 
 wind_display_img = CTkImage(light_image=Image.open(resource_path('img/icons_wind/0.png')), dark_image=Image.open(resource_path('img/icons_wind/0.png')), size=(165, 165))
-wind_display = CTkLabel(wind_frame, image=wind_display_img, text='')
+wind_display = CTkLabel(wind_frame, image=wind_display_img, text=wind_deg)
 wind_display.pack(fill=BOTH, pady=(20, 0))
 
 text_wind_frame = CTkFrame(wind_frame, fg_color=color_frame)
