@@ -357,7 +357,7 @@ root.title("WeatherDATA")
 root.geometry("1100x700")
 root.resizable(False, False)
 root.config(bg=color_bg)
-root.iconbitmap(resource_path('logo.ico'))
+root.iconbitmap(resource_path('img/logo.ico'))
 
 # FRAMING
 
