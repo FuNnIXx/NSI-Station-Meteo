@@ -10,3 +10,5 @@ Exercice : https://github.com/msilanus/StationMeteo
 -V2.0.0 :
 
   EXE / interface.py (utiliser le srcipt en presence de ses dependances presentes dans /V2-2.0.0/)
+
+repo : https://github.com/FuNnIXx/NSI-Station-Meteo/tree/main
