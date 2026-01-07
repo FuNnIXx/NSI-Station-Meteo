@@ -243,12 +243,10 @@ def call_api():
     cloud = data['clouds']['all']
     if 'rain' in data:
         rain = f"{data['rain']['1h']}mm"
-        rain = 'error'
     else:
         rain = 'Pas de pluie cette heure-ci'
     if 'snow' in data:
         snow = f"{data['snow']['1h']}mm"
-        snow = 'error'
     else:
         snow = 'Pas de neige cette heure-ci'
     sunrise = data['sys']['sunrise']
